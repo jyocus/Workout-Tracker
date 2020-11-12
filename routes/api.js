@@ -11,8 +11,9 @@ router.post("/api/workouts", ({ body }, res) => {
       });
   });
   
-  router.post("/api/workouts/bulk", ({ body }, res) => {
-    NewWorkout.insertMany(body)
+  
+  router.get("/api/workouts", (req, res) => {
+    NewWorkout.find({})
       .then(workoutTracker => {
         res.json(workoutTracker);
       })
@@ -20,16 +21,27 @@ router.post("/api/workouts", ({ body }, res) => {
         res.status(400).json(err);
       });
   });
-  
-  router.get("/api/workouts", (req, res) => {
-    NewWorkout.find({})
-      .sort({ date: -1 })
+
+  router.get("/api/workouts/range", (req,res) => {
+      NewWorkout.find({}).limit(7)
       .then(workoutTracker => {
         res.json(workoutTracker);
       })
       .catch(err => {
         res.status(400).json(err);
       });
+  })
+
+  router.put("/api/workouts/:id", (req,res) => {
+      NewWorkout.findByIdAndUpdate(req.params.id, 
+        {$push:{exercises:req.body}},
+        {new:true}) 
+        .then(workoutTracker => {
+            res.json(workoutTracker);
+          })
+          .catch(err => {
+            res.status(400).json(err);
+          });
   });
   
   module.exports = router;

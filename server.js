@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 //creating express instance
 const app = express();
@@ -11,7 +11,8 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1/workoutTracker", {
+// mongodb+srv://jyocus:password@cluster0.bpq4t.mongodb.net/workoutTracker?retryWrites=true&w=majority
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutTracker", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
     useCreateIndex: true,
@@ -20,7 +21,8 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://127.0.0.1/workoutTracker"
 
 // routes
 app.use(require("./routes/api.js"));
+app.use(require("./routes/html-routes.js"));
 
-app.listen(PORT, () => {
-  console.log(`App running on port ${PORT}!`);
+app.listen(port, () => {
+  console.log(`App running on port ${port}!`);
 });

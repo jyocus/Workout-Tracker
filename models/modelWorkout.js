@@ -36,19 +36,23 @@ const trackerSchema = new Schema({
             sets: {
                 type: Number,
 
+            },
+            distance: {
+                type: Number,
             }
+    
 
 
         }
     ]
-})
-//Need to convert vituals to JSON
-// (
-//     toJSON:(
-virtuals: true
-//}
-//});
-// )
+},
+
+{
+    toJSON: {
+        virtuals:true
+    }
+
+});
 
 trackerSchema.virtual('totalDuration').get(function () {
     return this.exercises.reduce((sum, exercise) => {
