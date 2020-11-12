@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const trackerSchema = new Schema({
+
     name: {
         type: String,
         trim:true,
@@ -26,7 +27,20 @@ const trackerSchema = new Schema({
 
 
 });
+//Need to convert vituals to JSON
+// (
+//     toJSON:(
+            virtuals: true
+//}
+//});
+// )
 
-const NewWorkout = mongoose.model("New Workout", trackerSchema);
+trackerSchema.virtual('totalDuration').get(function() {
+return this.exercises.reduce((sum, exercise) => {
+    return sum + exercise.weight
+    },0)
+});
+
+const NewWorkout = mongoose.model("Workout", trackerSchema);
 
 module.exports = NewWorkout;
