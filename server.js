@@ -12,7 +12,7 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-// mongodb+srv://jyocus:password@cluster0.bpq4t.mongodb.net/workoutTracker?retryWrites=true&w=majority
+
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutTracker", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
